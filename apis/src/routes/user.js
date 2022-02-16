@@ -11,6 +11,6 @@ User.post("/", userController.createUser);
 
 User.put("/:id", userController.updateUser);
 
-User.delete("/", userController.deleteUser);
+User.delete("/:id", userController.deleteUser);
 
 export default User;
