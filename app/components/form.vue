@@ -1,9 +1,9 @@
 <template>
   <div>
     <br />
-    <h2>Form</h2>
+    <h2>Add User</h2>
     <v-form>
-      <v-text-field  v-model="id" label="Id"></v-text-field>
+      <v-text-field  v-if="id" v-model="id" label="Id"></v-text-field>
       <v-text-field v-model="name" label="Name"></v-text-field>
       <v-text-field v-model="email" label="Email"></v-text-field>
       <v-text-field v-model="password" label="Password"></v-text-field>
@@ -56,9 +56,10 @@ export default {
         await this.$axios.put("http://localhost:4000/users/" + user.id, {
           name: user.name,
           email: user.email,
+          password: user.password,
         });
       } else {
-        await this.$axios.post("http://localhost:4000/users/signup", {
+        await this.$axios.post("http://localhost:4000/users/", {
           name: user.name,
           email: user.email,
           password: user.password,

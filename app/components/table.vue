@@ -3,10 +3,10 @@
     <br />
     <h2>List of Users</h2>
     <v-data-table :headers="headers" :items="users">
-      <template v-slot[`item.edit`]="{ item }">
-        <v-btn color="success" @click="editItem(item._id)">Edit</v-btn>
+      <template v-slot:[`item.edit`]="{ item }">
+        <v-btn color="success" @click="editItem(item)">Edit</v-btn>
       </template>
-      <template v-slot[`item.delete`]="{ item }">
+      <template v-slot:[`item.delete`]="{ item }">
         <v-btn color="danger" @click="deleteItem(item._id)">Delete</v-btn>
       </template>
     </v-data-table>
@@ -27,22 +27,22 @@ export default {
       ],
     };
   },
-  computer: {
+  computed: {
     users() {
         return this.$store.state.users.data
     }
   },
     async fetch() {
         this.$store.commit(
-            "users/storeData"
+            "users/storeData",
             (await this.$axios.get("http://localhost:4000/users")).data
         )
     },
   methods: {
       async deleteItem(id) {
-        await this.$axios.get("http://localhost:4000/users" + id)
+        await this.$axios.delete("http://localhost:4000/users/" + id)
               this.$store.commit(
-               "users/storeData"
+               "users/storeData",
                 (await this.$axios.get("http://localhost:4000/users")).data
             )
       },
@@ -51,8 +51,8 @@ export default {
         this.$store.commit("user/setName", user.name)
         this.$store.commit("user/setEmail", user.email)
         this.$store.commit("user/setPassword", user.password)
-      }
-  }
+      },
+  },
 
 };
 </script>
